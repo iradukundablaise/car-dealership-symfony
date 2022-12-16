@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ./docker
+    container_name: app_symfony
+    environment:
+      DATABASE_URL: ${MYSQL_DATABASE_URI}
+    ports:
+      - "9000:9000"
+    depends_on:
+      - db
+    volumes:
+      - "./app:/var/www/html/"
+    networks:
+      - symfony_network
+  db:
+    image: mysql:latest
+    container_name: app_database
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - "mysql_data:/var/lib/mysql"
+    networks:
+      - symfony_network
+  pma:
+    image: phpmyadmin
+    container_name: app_phpmyadmin
+    ports:
+      - "8001:80"
+    depends_on:
+      - db
+    networks:
+      - symfony_network
+
+volumes:
+  mysql_data:
+
+networks:
+  symfony_network:

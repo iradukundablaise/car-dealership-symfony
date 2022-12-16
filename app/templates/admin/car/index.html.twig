@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}All Cars Registered{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col col-lg-12">
+            <div class="mt-5 mb-3">
+                <h1 class="mb-5">All Cars Registered</h1>
+                <a class="btn btn-success btn-lg" href="{{ path('app_admin_car_new') }}">+ Add a car</a>
+            </div>
+            <hr/>
+            <table class="table table-striped">
+                <thead class="table-dark">
+                    <tr class="text-center">
+                        <th>Name</th>
+                        <th>Seats</th>
+                        <th>Doors</th>
+                        <th>Cost</th>
+                        <th>Category</th>
+                        <th>actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for car in cars %}
+                    <tr class="text-center">
+                        <td>{{ car.name }}</td>
+                        <td>{{ car.nbSeats }}</td>
+                        <td>{{ car.nbDoors }}</td>
+                        <td>{{ car.cost }}</td>
+                        <td>{{ car.category.name }}</td>
+                        <td>
+                            <a class="btn btn-success" href="{{ path('app_admin_car_show', {'id': car.id}) }}">show</a>
+                            <a class="btn btn-danger" href="{{ path('app_admin_car_edit', {'id': car.id}) }}">edit</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="7">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="navigation mt-4 mb-4">
+                {{ knp_pagination_render(cars) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Search car: {{ query }}{% endblock %}
+{% block body %}
+    <h1 class="text-center mt-5 mb-5">Best Car dealership in FRANCE 🇫🇷 </h1>
+    <h6>Search results for: {{ query }}</h6>
+    <div class="row">
+        {% for car in cars %}
+            <div class="col col-lg-3 mb-3">
+                <div class="card">
+                    <img src="{{ asset('images/car.jpg') }}" />
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h5>{{ car.name }}</h5>
+                            <h6>Cost: {{ car.cost }} €</h6>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span>Seats: {{ car.nbSeats }} | </span>
+                        <span>Doors: {{ car.nbDoors }} | </span>
+                        <span>Category: {{ car.category.name }}</span>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
